@@ -5,12 +5,12 @@
   "main": "index.js",
   "scripts": {
     "dev": "node ./server/index.js",
-    "dev:watch": "export NODE_ENV=development && supervisor --watch src -- -r 'babel-register' ./bin/service.js",
+    "dev:watch": "export NODE_ENV=development && supervisor --watch src -- -r 'babel-register' ./server/bin/service.js",
     "lint": "eslint --ext .js --ext .jsx src/",
-    "compile": "babel --presets es2015,stage-0 -d lib/ src/",
-    "build": "babel src/ --out-dir lib",
-    "test": "export NODE_ENV=test && npm run compile && mocha --compilers js:babel-core/register --recursive --watch-extensions .spec.js ./tests",
-    "test:watch": "npm run test -- --watch --bail ./tests"
+    "server:compile": "babel --presets es2015,stage-0 -d server/lib/ server/src/",
+    "server:build": "babel server/src/ --out-dir server/lib",
+    "server:test": "export NODE_ENV=test && npm run server:compile && mocha --compilers js:babel-core/register --recursive --watch-extensions .spec.js ./server/tests",
+    "server:test:watch": "npm run server:test -- --watch --bail ./server/tests"
   },
   "repository": {
     "type": "git",
