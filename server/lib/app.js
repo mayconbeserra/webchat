@@ -17,19 +17,13 @@ var application = exports.application = function () {
 
             app.use(_bodyParser2.default.json());
             app.use((0, _expressValidator2.default)());
+            app.use((0, _cors2.default)());
             (0, _api2.default)(app);
-
-            app.use(function (err, req, res, next) {
-              // eslint-disable-line consistent-return,no-unused-vars
-              if (err) {
-                console.log(err);
-                return handleError(err, res);
-              }
-            });
+            app.use(_errors2.default);
 
             return _context.abrupt('return', app);
 
-          case 6:
+          case 7:
           case 'end':
             return _context.stop();
         }
@@ -44,7 +38,7 @@ var application = exports.application = function () {
 
 var start = exports.start = function () {
   var _ref2 = _asyncToGenerator(regeneratorRuntime.mark(function _callee2(config) {
-    var app;
+    var app, server, io;
     return regeneratorRuntime.wrap(function _callee2$(_context2) {
       while (1) {
         switch (_context2.prev = _context2.next) {
@@ -55,26 +49,29 @@ var start = exports.start = function () {
 
           case 3:
             app = _context2.sent;
+            server = _http2.default.createServer(app);
+            io = _socket2.default.listen(server);
 
-            console.log('## Debugging ### ');
-            app.listen(config.env.http.port, config.env.http.host, function () {
-              console.log('listening on ' + config.env.http.host + ':' + config.env.http.port); /* eslint no-console:0 */
-            });
-            _context2.next = 11;
+
+            server.listen(config.env.http.port);
+            console.log('listening on ' + config.env.http.host + ':' + config.env.http.port); /* eslint no-console:0 */
+
+            (0, _chat2.default)(io);
+            _context2.next = 14;
             break;
 
-          case 8:
-            _context2.prev = 8;
+          case 11:
+            _context2.prev = 11;
             _context2.t0 = _context2['catch'](0);
 
             console.log('A critical error happened: ' + _context2.t0);
 
-          case 11:
+          case 14:
           case 'end':
             return _context2.stop();
         }
       }
-    }, _callee2, this, [[0, 8]]);
+    }, _callee2, this, [[0, 11]]);
   }));
 
   return function start(_x) {
@@ -94,17 +91,30 @@ var _expressValidator = require('express-validator');
 
 var _expressValidator2 = _interopRequireDefault(_expressValidator);
 
+var _socket = require('socket.io');
+
+var _socket2 = _interopRequireDefault(_socket);
+
+var _http = require('http');
+
+var _http2 = _interopRequireDefault(_http);
+
+var _cors = require('cors');
+
+var _cors2 = _interopRequireDefault(_cors);
+
 var _api = require('./api');
 
 var _api2 = _interopRequireDefault(_api);
 
+var _chat = require('./chat');
+
+var _chat2 = _interopRequireDefault(_chat);
+
+var _errors = require('./middlewares/errors');
+
+var _errors2 = _interopRequireDefault(_errors);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
-
-var handleError = function handleError(err, res) {
-  if (!err.error && err.code === '23505') {
-    return res.status(400).send({ error: err.detail });
-  }
-  return res.sendStatus(500);
-};
