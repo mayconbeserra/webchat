@@ -2,14 +2,28 @@ import React from 'react';
 
 class Login extends React.Component {
 
+  state = {
+    userName: '',
+  }
+
+  handleUsername = (event) => {
+    event.preventDefault();
+    this.setState({ userName: event.target.value });
+  }
+
   render () {
     let userLogin;
     if (this.props.username === 'guest') {
       userLogin = (
         <div>
-          <input type="text" placeholder="username" id="username" />
-          <input placeholder="password" type="password" id="password" />
-          <button onClick={ this.login }> Login </button>
+          <input
+            id="username"
+            type="text"
+            placeholder="username"
+            value={ this.state.userName }
+            onChange={ this.handleUsername }
+          />
+          <button onClick={ () => this.props.onLogin(this.state.userName) }> Login </button>
         </div>
       );
     } else {
@@ -26,6 +40,7 @@ class Login extends React.Component {
 
 Login.propTypes = {
   username: React.PropTypes.string.isRequired,
+  onLogin: React.PropTypes.func.isRequired,
 };
 
 export default Login;

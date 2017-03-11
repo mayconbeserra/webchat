@@ -2,8 +2,9 @@ import React from 'react';
 import { Panel } from 'react-bootstrap';
 
 const UsersList = (props) => {
-  const users = props.users.map((user) => {
-    return (<li>{ user }</li>);
+  /* eslint-disable react/no-array-index-key */
+  const users = props.users.map((user, index) => {
+    return (<li key={ index }>{ user }</li>);
   });
   const headerTitle = (<h3>Users: ({ users.length })</h3>);
 

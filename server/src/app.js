@@ -3,6 +3,7 @@ import bodyParser from 'body-parser';
 import expressValidator from 'express-validator';
 import socketIO from 'socket.io';
 import http from 'http';
+import cors from 'cors';
 import api from './api';
 
 const people = {};
@@ -13,6 +14,7 @@ export async function application () {
 
   app.use(bodyParser.json());
   app.use(expressValidator());
+  app.use(cors());
 
   api(app);
 
@@ -59,7 +61,7 @@ const handleChat = (io) => {
     });
     socket.on('message', (message) => {
       console.log(message);
-      io.emit('receive-message', message)
+      io.emit('receive-message', message);
     });
   });
 };

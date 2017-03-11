@@ -5,6 +5,7 @@ import Login from '../Login';
 import MessagesBox from '../MessagesBox';
 import UsersList from '../UsersList';
 import SendMessage from '../SendMessage';
+import { post } from '../../services/apiService';
 
 class Chat extends Component {
   state = {
@@ -63,6 +64,26 @@ class Chat extends Component {
     this.setState({ currentMsg: input.value });
   }
 
+  handleLogin = (userName) => {
+    post(
+      'http://localhost:3000/api/v1/users',
+      { name: userName, active: true },
+      this.handleResponseFromPost.bind(this),
+    );
+  }
+
+  handleResponseFromPost = (param) => {
+    const self = this;
+    if (param.statusCode === 201) {
+      self.state.socket.emit('join', param.body.name);
+      this.setState(
+        {
+          username: param.body.name,
+          isLogged: true,
+        });
+    }
+  }
+
   render () {
     const panelTitle = (<h3>Welcome! It is time to chat!</h3>);
     return (
@@ -71,7 +92,10 @@ class Chat extends Component {
           <div className="col-sm-12">
             <div className="row">
               <div className="col-sm-12">
-                <Login username={ this.state.username } />
+                <Login
+                  username={ this.state.username }
+                  onLogin={ this.handleLogin }
+                />
               </div>
             </div>
             <div className="row">
@@ -85,6 +109,7 @@ class Chat extends Component {
             <div className="row">
               <div className="col-sm-12">
                 <SendMessage
+                  isLogged={ this.state.isLogged }
                   currentMsg={ this.state.currentMsg }
                   onEnterMessage={ this.handleEnterMessage }
                   onMessageChange={ this.handleMessageChange }

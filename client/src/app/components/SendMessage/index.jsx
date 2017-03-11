@@ -5,10 +5,14 @@ import './style.scss';
 const SendMessage = (props) => {
   const headerTitle = (<h3>Your Message:</h3>);
   return (
-    <Panel header={ headerTitle } bsStyle="success" className="send-message-disabled">
+    <Panel
+      header={ headerTitle }
+      bsStyle="success"
+      className={ props.isLogged ? '' : 'send-message-disabled' }
+    >
       <input
-        type="text"
         id="message"
+        type="text"
         className="input-message"
         value={ props.currentMsg }
         onChange={ props.onMessageChange }
@@ -20,6 +24,7 @@ const SendMessage = (props) => {
 };
 
 SendMessage.propTypes = {
+  isLogged: React.PropTypes.bool.isRequired,
   currentMsg: React.PropTypes.string.isRequired,
   onEnterMessage: React.PropTypes.func.isRequired,
   onMessageChange: React.PropTypes.func.isRequired,
