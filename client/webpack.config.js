@@ -13,6 +13,9 @@ var config = {
     filename: 'bundle.js',
     publicPath: BUILD_DIR
   },
+  resolve: {
+    extensions: ['.js', '.jsx', '.json', '.scss']
+  },
   module : {
     loaders : [
       {
@@ -47,6 +50,16 @@ var config = {
        {
          test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
          loader: 'url?limit=10000&mimetype=image/svg+xml'
+       },
+       {
+         test: /\.scss$/,
+         use: [{
+             loader: "style-loader" // creates style nodes from JS strings
+         }, {
+             loader: "css-loader" // translates CSS into CommonJS
+         }, {
+             loader: "sass-loader" // compiles Sass to CSS
+         }]
        }
     ]
   },
