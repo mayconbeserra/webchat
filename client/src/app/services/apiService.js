@@ -6,7 +6,7 @@ export function post (url, payload, callback) {
     .type('json')
     .send(payload)
     .end((err, res) => {
-      if (err) console.log(err);
+      if (err) console.log(err); // eslint-disable-line
       callback(res);
     });
 }
