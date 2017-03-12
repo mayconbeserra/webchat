@@ -11,7 +11,7 @@ module.exports = {
     connection: {
       user: 'postgres',
       password: 'sql',
-      database: 'webchat',
+      database: 'webchat_test',
       host: config.default.env.db.host,
     },
     migrations: {
