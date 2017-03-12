@@ -47,3 +47,7 @@ This is a WebChat. It's proof of concept using several technologies
 * `docker-compose up --force-recreate --remove-orphans local`
 * `wait some seconds`
 * Access: `http://localhost:8081/`
+
+# Demo
+
+![App demo](docs/webchat-demo.gif)
