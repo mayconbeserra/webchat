@@ -14,7 +14,7 @@
     "server:dev:watch": "export NODE_ENV=development && supervisor --watch server/src -- -r 'babel-register' ./server/bin/service.js",
     "server:compile": "babel --presets es2015,stage-0 -d server/lib/ server/src/",
     "server:build": "babel server/src/ --out-dir server/lib",
-    "server:test": "export NODE_ENV=test && npm run server:compile && mocha --compilers js:babel-core/register --recursive --watch-extensions .spec.js ./server/tests",
+    "server:test": "export NODE_ENV=test && npm install && npm run server:compile && mocha --compilers js:babel-core/register --recursive --watch-extensions .spec.js ./server/tests",
     "server:test:watch": "npm run server:test -- --watch --bail ./server/tests",
     "migrations:dev": "knex migrate:latest --knexfile server/knexfile.js --env development",
     "seed:dev": "knex seed:run --knexfile server/knexfile.js --env development"
