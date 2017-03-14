@@ -54,24 +54,25 @@ var start = exports.start = function () {
 
 
             server.listen(config.env.http.port);
-            console.log('listening on ' + config.env.http.host + ':' + config.env.http.port); /* eslint no-console:0 */
+            console.log('listening backend on ' + config.env.http.host + ':' + config.env.http.port); /* eslint no-console:0 */
+            console.log('listening frontend on http://0.0.0.0:8081');
 
             (0, _chat2.default)(io);
-            _context2.next = 14;
+            _context2.next = 15;
             break;
 
-          case 11:
-            _context2.prev = 11;
+          case 12:
+            _context2.prev = 12;
             _context2.t0 = _context2['catch'](0);
 
             console.log('A critical error happened: ' + _context2.t0);
 
-          case 14:
+          case 15:
           case 'end':
             return _context2.stop();
         }
       }
-    }, _callee2, this, [[0, 11]]);
+    }, _callee2, this, [[0, 12]]);
   }));
 
   return function start(_x) {

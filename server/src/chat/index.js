@@ -11,9 +11,16 @@ export default function handleChat (io) {
     });
     socket.on('message', (message) => {
       console.log(message); // eslint-disable-line no-console
+      listMessages.push(message);
       io.emit('receive-message', message);
     });
   });
+}
+
+let listMessages = [];
+
+export function getMessages () {
+  return listMessages;
 }
 
 const people = {};

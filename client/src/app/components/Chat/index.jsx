@@ -5,7 +5,7 @@ import Login from '../Login';
 import MessagesBox from '../MessagesBox';
 import UsersList from '../UsersList';
 import SendMessage from '../SendMessage';
-import { post } from '../../services/apiService';
+import { get, post } from '../../services/apiService';
 
 class Chat extends Component {
   state = {
@@ -19,6 +19,8 @@ class Chat extends Component {
 
   componentDidMount = () => {
     const self = this;
+    this.handleGetMessages();
+
     this.state.socket.on('receive-message', (message) => {
       const messages = self.state.messages;
       messages.push(message);
@@ -33,6 +35,20 @@ class Chat extends Component {
       const username = JSON.parse(this.state.username);
       this.setState({ username });
       this.state.socket.emit('join', username);
+    }
+  }
+
+  handleGetMessages = () => {
+    get(
+      'http://localhost:3000/api/v1/messages',
+      this.handleResponseFromGet.bind(this),
+    );
+  }
+
+  handleResponseFromGet = (param) => {
+    if (param.statusCode === 200) {
+      console.log(param.body);
+      this.setState({ messages: param.body });
     }
   }
 
