@@ -116,7 +116,10 @@ class Chat extends Component {
             </div>
             <div className="row">
               <div className="col-sm-8">
-                <MessagesBox messages={ this.state.messages } />
+                <MessagesBox
+                  messages={ this.state.messages }
+                  isLoggedIn={ this.state.isLogged }
+                />
               </div>
               <div className="col-sm-4">
                 <UsersList users={ this.state.users } />
