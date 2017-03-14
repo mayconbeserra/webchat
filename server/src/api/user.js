@@ -1,15 +1,15 @@
 import repository from '../repositories/usersRepository';
-import reportService from '../services/v1/user';
+import userService from '../services/v1/user';
 
 export async function list (req, res) {
-  const data = await reportService({
+  const data = await userService({
     repo: repository(),
   }).list();
   res.status(200).json(data);
 }
 
 export async function detail (req, res) {
-  const data = await reportService({
+  const data = await userService({
     repo: repository(),
   }).detail(req.params.id);
 
@@ -19,7 +19,7 @@ export async function detail (req, res) {
 }
 
 export async function create (req, res) {
-  const newEntity = await reportService({
+  const newEntity = await userService({
     repo: repository(),
   }).create(req.body);
 
@@ -29,7 +29,7 @@ export async function create (req, res) {
 }
 
 export async function update (req, res) {
-  const result = await reportService({
+  const result = await userService({
     repo: repository(),
   }).update(req.params.id, req.body);
 
@@ -43,7 +43,7 @@ export async function del (req, res) {
 
   if (!user) return res.status(404).end();
 
-  await reportService({
+  await userService({
     repo: repository(),
   }).del(req.params.id);
 

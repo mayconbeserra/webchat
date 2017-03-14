@@ -11,6 +11,11 @@ export function post (url, payload, callback) {
     });
 }
 
-export function get () {
-
+export function get (url, callback) {
+  return request
+    .get(url)
+    .end((err, res) => {
+      if (err) console.log(err); // eslint-disable-line
+      callback(res);
+    });
 }

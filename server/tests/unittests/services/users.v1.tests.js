@@ -17,6 +17,17 @@ describe('Testing --> Services.Users', () => {
       expect(result).to.have.property('name', expected.name);
       expect(result).to.have.property('active', expected.active);
     });
+
+    it('test', async () => {
+      const x = () => console.log(this);
+      x();
+
+      const obj = {
+        x: x.bind('here'),
+      };
+
+      obj.x();
+    });
   });
 
   describe('Create', () => {

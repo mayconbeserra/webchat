@@ -16,7 +16,7 @@ const MessagesBox = (props) => {
   return (
     <Panel header={ headerTitle } bsStyle="danger">
       <ul className="chat">
-        { messages }
+        { props.isLoggedIn ? messages : '' }
       </ul>
     </Panel>
   );
@@ -24,6 +24,7 @@ const MessagesBox = (props) => {
 
 MessagesBox.propTypes = {
   messages: React.PropTypes.arrayOf(React.PropTypes.object).isRequired,
+  isLoggedIn: React.PropTypes.bool.isRequired,
 };
 
 export default MessagesBox;
